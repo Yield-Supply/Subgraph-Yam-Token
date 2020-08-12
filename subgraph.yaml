@@ -1,0 +1,53 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - DelegateChanged
+        - DelegateVotesChanged
+        - Mint
+        - NewGov
+        - NewImplementation
+        - NewIncentivizer
+        - NewPendingGov
+        - NewRebaser
+        - Rebase
+        - Transfer
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: DelegateChanged(indexed address,indexed address,indexed address)
+          handler: handleDelegateChanged
+        - event: DelegateVotesChanged(indexed address,uint256,uint256)
+          handler: handleDelegateVotesChanged
+        - event: Mint(address,uint256)
+          handler: handleMint
+        - event: NewGov(address,address)
+          handler: handleNewGov
+        - event: NewImplementation(address,address)
+          handler: handleNewImplementation
+        - event: NewIncentivizer(address,address)
+          handler: handleNewIncentivizer
+        - event: NewPendingGov(address,address)
+          handler: handleNewPendingGov
+        - event: NewRebaser(address,address)
+          handler: handleNewRebaser
+        - event: Rebase(uint256,uint256,uint256)
+          handler: handleRebase
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
